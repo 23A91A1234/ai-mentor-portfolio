@@ -1,0 +1,178 @@
+{
+  "name": "Daily Placement News Digest",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "aac548b8-c342-4234-9c5e-7a8f17cdc6be",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://news.ycombinator.com/rss",
+        "options": {
+          "customFields": "Limit : 10"
+        }
+      },
+      "type": "n8n-nodes-base.rssFeedRead",
+      "typeVersion": 1.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "5ce3f47b-00bd-4b36-9782-356ed7e6ce09",
+      "name": "RSS Read"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contents\": [\n    {\n      \"parts\": [\n        {\n          \"text\": \"{{ $json.title }}\"\n        }\n      ]\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        832,
+        0
+      ],
+      "id": "c7648230-3485-4c14-b8e1-4ed67372bd1c",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "yNc9DeOIy8mJyNiD",
+          "name": "Header Auth account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        624,
+        0
+      ],
+      "id": "3db49246-a2bc-4cb2-be6c-1acb63e72599",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "sendTo": "sahithi15072006@gmail.com",
+        "subject": "=Placement News Digest — {{$now.format(\"dd MMM yyyy\")}}",
+        "message": "=Good morning. Today's placement news digest:  {{ $json[\"candidates\"][0][\"content\"][\"parts\"][0][\"text\"] }}  Sent automatically by n8n at 7:00 AM IST.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1040,
+        0
+      ],
+      "id": "f54fceaa-9910-44cd-82f8-2967de564a4e",
+      "name": "Send a message",
+      "webhookId": "8f5fc2e1-fa5a-42f5-b186-eda079bbd885",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "bvuy7I6tTNf4bkfX",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 7 * * *"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        208,
+        0
+      ],
+      "id": "38c0a574-b0a6-458f-821a-a19625c47f5e",
+      "name": "Schedule Trigger"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        []
+      ]
+    },
+    "RSS Read": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "RSS Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "a794a68b-a4cc-4130-9598-23abcbd5c7f6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a9e7f958e7f0cfa3b1d41d52f6dffff25eed80ca69c0940b496d8f567a045745"
+  },
+  "nodeGroups": [],
+  "id": "lIlGyrIqnVOMIZY1",
+  "tags": []
+}
