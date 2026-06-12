@@ -1,0 +1,6 @@
+Claim,AI Output Source,Perplexity Check,Primary Source Check,Verdict
+"IIT Bombay CSE highest package ₹3.67 crore in 2026","Gemini: ₹3.67 crore claimed for 2026 CSE","₹3.67 crore is from earlier international offer cycle, not 2026","IIT Bombay placement reports show older international package context, not 2026 CSE-specific data",FALSE
+"BITS Pilani 95% placement rate in 2025–26","Gemini: 95% placement claimed","~80% placement for Class of 2025 interim report","BITS official interim placement data shows ~80%, no 95% final confirmation",FALSE
+"JNTUH B.Tech placement rate 62% in 2025","Gemini: 62% placement rate","312/501 students placed = 62%","JNTUH UG placement statistics confirm 62% rate",TRUE
+"IIIT Hyderabad CSE average salary ₹32.8 LPA in 2025–26","Gemini: ₹32.8 LPA","~₹31.98 LPA in latest completed cycle","IIIT Hyderabad official placement stats show ~₹31.98 LPA for CSE",FALSE
+"IIT Kanpur 672 Day 1 offers in 2025–26","Gemini: 672 offers","Confirmed 672 Day 1 offers","IIT Kanpur SPO official announcement confirms 672 offers",TRUE
