@@ -35,5 +35,5 @@ Public portfolio of 12-day AI Trainer Workshop. By Day 12: 6 daily notebooks + c
 - ✅ Workflow JSON committed: [Day4_NewsDigest.json](Day4_NewsDigest.json)
 - ✅ Test email screenshot below
 
-![Test email screenshot](daily_digest_test_email.png)
+![Test email screenshot](daily_digest_test_email.png.png)
 ```
